@@ -21,6 +21,7 @@ import { slashCommand, suggestionItems } from "./slash-command";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { uploadFn } from "./image-upload";
 import { Separator } from "../ui/separator";
+import { useAppStore } from "@/store/appStore";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -29,6 +30,7 @@ interface EditorProp {
   onChange: (value: JSONContent) => void;
 }
 const Editor = ({ initialValue, onChange }: EditorProp) => {
+  const { setEditorState } = useAppStore();
   const [openNode, setOpenNode] = useState(false);
   const [openColor, setOpenColor] = useState(false);
   const [openLink, setOpenLink] = useState(false);
@@ -52,6 +54,7 @@ const Editor = ({ initialValue, onChange }: EditorProp) => {
         }}
         onUpdate={({ editor }) => {
           onChange(editor.getJSON());
+          setEditorState("editing");
         }}
         slotAfter={<ImageResizer />}
       >

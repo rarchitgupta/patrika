@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import useAuthStore from "@/store/authStore";
 import { useEffect } from "react";
-import { Loader } from "lucide-react";
+import { LoaderScreen } from "./loader-screen";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -17,9 +17,7 @@ export const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
     }
   }, [user, loading]);
   if (loading || !user) {
-    <div className="w-full min-h-screen flex flex-col justify-center items-center">
-      <Loader size={50} className="animate-spin" />
-    </div>;
+    <LoaderScreen />;
   }
   return <>{children}</>;
 };

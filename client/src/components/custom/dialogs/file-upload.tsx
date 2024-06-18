@@ -50,8 +50,6 @@ function FileUpload({
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     if (onSubmitHandler) {
       onSubmitHandler(data);
-    } else {
-      console.log(data);
     }
   };
 
@@ -88,6 +86,7 @@ function FileUpload({
                         placeholder="shadcn"
                         {...fileRef}
                         accept="application/pdf"
+                        className="focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
                       />
                     </FormControl>
                     <FormMessage>

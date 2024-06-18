@@ -19,7 +19,7 @@ const FileUpload = dynamic(
   }
 );
 export default function Documents() {
-  const { data: documents } = useGetSources();
+  const { data: sources } = useGetSources();
   const queryClient = useQueryClient();
   const { mutate: useUploadSourceMutate } = useUploadSource();
   function uploadSource(data: { file: FileList }) {
@@ -56,10 +56,10 @@ export default function Documents() {
             <h1 className="text-lg font-semibold md:text-2xl">
               Context Management
             </h1>
-            {documents && (
+            {sources && (
               <DataTable
                 columns={columns}
-                data={documents}
+                data={sources}
                 children={<AddContext />}
               />
             )}

@@ -11,11 +11,15 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 
-export function DatePicker() {
-  const [date, setDate] = useState<Date>();
-
+export function DatePicker({
+  date,
+  setDate,
+}: {
+  date: Date | undefined;
+  setDate: Dispatch<SetStateAction<Date | undefined>>;
+}) {
   return (
     <Popover>
       <PopoverTrigger asChild>

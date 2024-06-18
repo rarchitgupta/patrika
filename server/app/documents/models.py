@@ -9,4 +9,5 @@ class Document(Base):
     user_id = Column(String, index=True)
     name = Column(String, index=True)
     date = Column(DateTime, default=datetime.now(), index=True)
+    last_modified = Column(DateTime, default=datetime.now(), index=True)
     json_content = Column(JSON)

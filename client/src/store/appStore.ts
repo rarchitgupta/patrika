@@ -1,8 +1,9 @@
 import { Range } from "@tiptap/react";
+import { EditorInstance } from "novel";
 import { create } from "zustand";
 
 interface DialogState {
-  editor: null | any;
+  editor: null | EditorInstance;
   range: null | Range;
   aiStream: string;
   isAiDialogOpen: boolean;
@@ -18,7 +19,7 @@ interface DialogState {
   closeAiDialog: () => void;
   openFileUploadDialog: () => void;
   closeFileUploadDialog: () => void;
-  setEditor: (editor: any) => void;
+  setEditor: (editor: EditorInstance) => void;
   setRange: (range: Range) => void;
   setAiStream: (stream: string) => void;
 }

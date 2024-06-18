@@ -27,7 +27,7 @@ import { Search } from "lucide-react";
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 export function DataTable<TData, TValue>({
@@ -59,12 +59,10 @@ export function DataTable<TData, TValue>({
         <div className="relative">
           <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
-            placeholder="Filter sources"
-            value={
-              (table.getColumn("source_name")?.getFilterValue() as string) ?? ""
-            }
+            placeholder="Filter Documents"
+            value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
-              table.getColumn("source_name")?.setFilterValue(event.target.value)
+              table.getColumn("name")?.setFilterValue(event.target.value)
             }
             className="w-sm appearance-none bg-background pl-8 shadow-none md:w-96 focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
           />

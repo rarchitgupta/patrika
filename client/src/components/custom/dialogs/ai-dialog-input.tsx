@@ -88,7 +88,10 @@ export function AiDialogInput() {
                 <FormItem>
                   <FormLabel>Question</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input
+                      {...field}
+                      className="focus-visible:ring-0 focus-visible:ring-transparent focus-visible:ring-offset-0"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

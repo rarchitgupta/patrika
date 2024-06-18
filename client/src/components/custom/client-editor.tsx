@@ -5,11 +5,21 @@ import { EditorInstance, JSONContent } from "novel";
 import { useState } from "react";
 import { defaultValue } from "@/app/default-value";
 import { useDebouncedCallback } from "use-debounce";
+import { useAppStore } from "@/store/appStore";
 
-export function ClientEditor() {
-  const [value, setValue] = useState<JSONContent>(defaultValue);
+export function ClientEditor({
+  initialValue,
+  handleContentUpdate,
+}: {
+  initialValue: JSONContent;
+  handleContentUpdate: (json: JSONContent) => void;
+}) {
+  const [value, setValue] = useState<JSONContent>(initialValue);
+  const { setEditorState } = useAppStore();
   const debouncedUpdates = useDebouncedCallback(async (json: JSONContent) => {
-    console.log("json", json);
+    setEditorState("saved");
+    setValue(json);
+    handleContentUpdate(json);
   }, 500);
   return (
     <ScrollArea className="px-6 py-4 lg:px-24 flex-1 overflow-auto">
