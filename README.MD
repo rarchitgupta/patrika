@@ -16,12 +16,12 @@ Patrika is an open-source generative AI journaling app designed to help users ef
 
 This project would not be possible without the many cool open projects that it is composed of:
 
-[Novel](https://github.com/steven-tey/novel)
-[shadcn/ui](https://ui.shadcn.com/)
-[Langchain](https://www.langchain.com/)
+- [Novel](https://github.com/steven-tey/novel)
+- [shadcn/ui](https://ui.shadcn.com/)
+- [Langchain](https://www.langchain.com/)
 
 Other integrations:
-[Firebase](https://firebase.google.com/)
+- [Firebase](https://firebase.google.com/)
 
 ## Installation and local development
 
