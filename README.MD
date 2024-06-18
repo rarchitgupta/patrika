@@ -2,7 +2,7 @@
 
 Patrika is an open-source generative AI journaling app designed to help users effortlessly create journal entries using techniques like RAG (Retrieval-Augmented Generation)
 
-![Patrika Sample Image](./assets/Sample.png)
+![Patrika Sample Image](./assets/sample.png)
 
 ### Features
 
