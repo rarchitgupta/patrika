@@ -32,7 +32,7 @@ export const useAppStore = create<DialogState>((set) => ({
   isApiKeyDialogOpen: false,
   aiGenerateLoading: false,
   isFileUploadDialogOpen: false,
-  editorState: "editing",
+  editorState: "saved",
   setEditorState: (state) => set({ editorState: state }),
   setAiGenerateLoading: (loading) => set({ aiGenerateLoading: loading }),
   openApiKeyDialog: () => set({ isApiKeyDialogOpen: true }),

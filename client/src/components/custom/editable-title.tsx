@@ -6,19 +6,39 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Dispatch, SetStateAction } from "react";
+import { useUpdateDocument } from "@/api/update-document";
+import { toast } from "sonner";
 
 export function EditableTitle({
   title,
   setTitle,
+  documentId,
 }: {
   title: string | undefined;
   setTitle: Dispatch<SetStateAction<string>>;
+  documentId: number;
 }) {
+  const { mutate: updateDocumentMutate } = useUpdateDocument();
   function handleTitleChange(e: React.FormEvent<HTMLInputElement>) {
     setTitle(e.currentTarget.value);
+  }
+  function handleBlur() {
     if (!title) {
       setTitle("Untitled");
     }
+    handleTitleUpdate();
+  }
+
+  function handleTitleUpdate() {
+    updateDocumentMutate(
+      { id: documentId, name: title },
+      {
+        onSuccess: () => {},
+        onError: (e) => {
+          toast.error("Error while saving document");
+        },
+      }
+    );
   }
   return (
     <Popover>
@@ -28,7 +48,7 @@ export function EditableTitle({
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto">
-        <Input onChange={handleTitleChange} value={title} />
+        <Input onChange={handleTitleChange} value={title} onBlur={handleBlur} />
       </PopoverContent>
     </Popover>
   );

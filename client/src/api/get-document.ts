@@ -5,7 +5,7 @@ import useAuthStore from "@/store/authStore";
 export const useGetDocument = (id: number) => {
   const { user } = useAuthStore();
   const query = useQuery({
-    queryKey: ["latestDocument"],
+    queryKey: ["getDocument"],
     queryFn: async () => {
       if (!user) {
         throw new Error("User is not authenticated");

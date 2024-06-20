@@ -12,14 +12,37 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Dispatch, SetStateAction, useState } from "react";
+import { useUpdateDocument } from "@/api/update-document";
+import { toast } from "sonner";
 
 export function DatePicker({
   date,
   setDate,
+  documentId,
 }: {
   date: Date | undefined;
   setDate: Dispatch<SetStateAction<Date | undefined>>;
+  documentId: number;
 }) {
+  const { mutate: updateDocumentMutate } = useUpdateDocument();
+  function handleDateUpdate(selectedDate: Date | undefined) {
+    if (selectedDate) {
+      updateDocumentMutate(
+        { id: documentId, date: selectedDate },
+        {
+          onSuccess: () => {},
+          onError: (e) => {
+            toast.error("Error while saving document");
+          },
+        }
+      );
+    }
+  }
+
+  function handleDateSelect(selectedDate: Date | undefined) {
+    setDate(selectedDate);
+    handleDateUpdate(selectedDate);
+  }
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -38,7 +61,7 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateSelect}
           initialFocus
         />
       </PopoverContent>

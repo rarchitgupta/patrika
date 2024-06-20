@@ -13,6 +13,7 @@ import { SkeletonDocument } from "@/components/custom/skeletons/skeleton-documen
 import { useUpdateDocument } from "@/api/update-document";
 import { JSONContent } from "novel";
 import { toast } from "sonner";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 export default function Document({
   params,
@@ -57,25 +58,33 @@ export default function Document({
   return (
     <ProtectedRoute>
       <AppLayout>
-        <main className="flex flex-1 flex-col gap-4 lg:gap-4 h-screen">
+        <ScrollArea className="flex flex-1 flex-col gap-4 lg:gap-4">
           <div className="px-6 py-4 lg:px-24 lg:pt-16 flex flex-col justify-center">
             <div className="flex flex-col gap-8 justify-between md:flex-row md:items-center">
-              <EditableTitle title={title} setTitle={setTitle} />
-              {/* <DatePicker date={date} setDate={setDate} /> */}
+              <EditableTitle
+                title={title}
+                setTitle={setTitle}
+                documentId={params.documentId}
+              />
+              <DatePicker
+                date={date}
+                setDate={setDate}
+                documentId={params.documentId}
+              />
             </div>
             <EditorStatus />
           </div>
           <div className="flex flex-1 overflow-hidden">
             <div className="flex flex-1 flex-col">
               <ClientEditor
-                initialValue={documentData?.json_content}
+                initialValue={documentData.json_content}
                 handleContentUpdate={handleContentUpdate}
               />
               <AiDialogInput />
               <OpenAIKeyInput />
             </div>
           </div>
-        </main>
+        </ScrollArea>
       </AppLayout>
     </ProtectedRoute>
   );

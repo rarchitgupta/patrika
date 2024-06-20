@@ -3,10 +3,7 @@ import dynamic from "next/dynamic";
 import { useGetSources } from "@/api/get-sources";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
-import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
-import { useAppStore } from "@/store/appStore";
-import { ReactNode } from "react";
+import { AddContext } from "@/components/custom/add-context";
 import { useUploadSource } from "@/api/upload-source";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -70,19 +67,5 @@ export default function Documents() {
         </main>
       </AppLayout>
     </ProtectedRoute>
-  );
-}
-
-export function AddContext(): ReactNode {
-  const { openFileUploadDialog } = useAppStore();
-  return (
-    <Button
-      className="items-center"
-      variant={"outline"}
-      onClick={openFileUploadDialog}
-    >
-      <Plus size={20} className="mr-2" />
-      Context
-    </Button>
   );
 }
