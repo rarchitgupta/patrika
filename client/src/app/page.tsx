@@ -13,10 +13,9 @@ export default function Dashboard() {
       router.push(`/${latestDocument.id}`);
     }
   }, [latestDocument]);
-  if (latestDocumentLoading || !latestDocument) {
+  if (latestDocumentLoading) {
     return <LoaderScreen />;
   }
-
   return (
     <ProtectedRoute>
       <LoaderScreen />

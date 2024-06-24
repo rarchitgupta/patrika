@@ -10,6 +10,7 @@ from .service import (
     update_document_service,
     get_latest_document_service,
     get_document_service,
+    delete_document_service,
 )
 
 
@@ -26,15 +27,21 @@ class UpdateDocumentRequest(BaseModel):
     json_content: Optional[Any] = None
 
 
+class AddDocumentRequest(BaseModel):
+    name: str
+    date: str
+    json_content: Any
+
+
 @router.post("/documents")
 async def add_document(
-    name: str,
-    date: str,
-    json_content: dict,
+    add_request: AddDocumentRequest,
     user=Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    res = await add_document_service(name, user["uid"], json_content, date, db)
+    res = await add_document_service(
+        add_request.name, user["uid"], add_request.json_content, add_request.date, db
+    )
     if res["success"]:
         return res
     else:
@@ -91,5 +98,18 @@ async def get_document(
     res = await get_document_service(id, user["uid"], db)
     if res["success"]:
         return res["data"]
+    else:
+        raise HTTPException(status_code=500, detail=res["message"])
+
+
+@router.delete("/documents/{id}")
+async def delete_document(
+    id: int,
+    user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    res = await delete_document_service(id, user["uid"], db)
+    if res["success"]:
+        return res
     else:
         raise HTTPException(status_code=500, detail=res["message"])

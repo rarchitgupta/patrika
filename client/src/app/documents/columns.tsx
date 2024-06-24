@@ -1,6 +1,7 @@
 "use client";
 import { ColumnDef } from "@tanstack/react-table";
 import { EditDocument } from "@/components/custom/edit-document";
+import { DeleteDocument } from "./delete-document";
 
 export type Document = {
   id: number;
@@ -47,9 +48,12 @@ export const columns: ColumnDef<Document>[] = [
     cell: ({ row }) => {
       const documentId = row.getValue("id");
       return (
-        <EditDocument
-          documentId={typeof documentId == "number" ? documentId : 0}
-        />
+        <div className="flex flex-row items-center gap-4">
+          <EditDocument
+            documentId={typeof documentId == "number" ? documentId : 0}
+          />
+          <DeleteDocument row={row} />
+        </div>
       );
     },
   },

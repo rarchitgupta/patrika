@@ -1,6 +1,5 @@
 import { Sheet, SheetTrigger, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import {
   Menu,
   Package2,
@@ -10,7 +9,16 @@ import {
   MessageSquareMore,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 export function MobileSidebar() {
+  const pathname = usePathname();
+  function getLinkClass(currentPath: string) {
+    return `mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 hover:text-foreground ${
+      currentPath === pathname
+        ? "bg-muted text-foreground"
+        : "text-muted-foreground"
+    }`;
+  }
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -26,39 +34,26 @@ export function MobileSidebar() {
             className="flex items-center gap-2 text-lg font-semibold"
           >
             <Package2 className="h-6 w-6" />
-            <span className="sr-only">Acme Inc</span>
+            <span className="sr-only">Patrika</span>
           </Link>
-          <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <Pencil className="h-5 w-5" />
-            Create
-          </Link>
-          <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <Files className="h-5 w-5" />
-            Documents
-            <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full">
-              6
-            </Badge>
-          </Link>
-          <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
-          >
-            <Brain className="h-5 w-5" />
-            Context
-          </Link>
-          <Link
-            href="#"
-            className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-          >
-            <MessageSquareMore className="h-5 w-5" />
-            Chat
-          </Link>
+          <div>
+            <Link href="/" className={getLinkClass("/")}>
+              <Pencil className="h-5 w-5" />
+              Create
+            </Link>
+            <Link href="/documents" className={getLinkClass("/documents")}>
+              <Files className="h-5 w-5" />
+              Documents
+            </Link>
+            <Link href="/context" className={getLinkClass("/context")}>
+              <Brain className="h-5 w-5" />
+              Context
+            </Link>
+            <Link href="/chat" className={getLinkClass("/chat")}>
+              <MessageSquareMore className="h-5 w-5" />
+              Chat
+            </Link>
+          </div>
         </nav>
         <div className="mt-auto"></div>
       </SheetContent>

@@ -9,6 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ProtectedRoute } from "@/components/custom/protected-route";
 import { AppLayout } from "@/components/custom/app-layout";
+import { useAppStore } from "@/store/appStore";
 const FileUpload = dynamic(
   () => import("@/components/custom/dialogs/file-upload"),
   {
@@ -17,6 +18,7 @@ const FileUpload = dynamic(
 );
 export default function Documents() {
   const { data: sources } = useGetSources();
+  const { closeFileUploadDialog } = useAppStore();
   const queryClient = useQueryClient();
   const { mutate: useUploadSourceMutate } = useUploadSource();
   function uploadSource(data: { file: FileList }) {
@@ -30,6 +32,7 @@ export default function Documents() {
                 queryKey: ["sources"],
                 exact: true,
               });
+              closeFileUploadDialog();
               resolve(data);
             },
             onError: (e) => {

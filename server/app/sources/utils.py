@@ -1,3 +1,5 @@
+import aiofiles
+import uuid
 from tempfile import NamedTemporaryFile
 from typing import List
 from fastapi import UploadFile
@@ -28,6 +30,11 @@ async def load_doc(file: UploadFile, user_id: str) -> List[Document]:
 
 
 def split_text(docs: List[Document], embeddings: OpenAIEmbeddings):
+    vector_ids = []
     text_splitter = SemanticChunker(embeddings=embeddings)
     chunks = text_splitter.split_documents(docs)
-    return chunks
+    for idx, chunk in enumerate(chunks):
+        vector_id = str(uuid.uuid4())
+        chunks[idx].metadata["id"] = vector_id
+        vector_ids.append(vector_id)
+    return [chunks, vector_ids]

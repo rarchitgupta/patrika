@@ -1,18 +1,17 @@
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
-import os
 from dotenv import load_dotenv
 from app.config import LLM_MODEL
 
 load_dotenv()
 
 
-def get_embeddings():
+def get_embeddings(openai_api_key: str):
     openai_embeddings = OpenAIEmbeddings(
-        api_key=os.environ.get("OPENAI_API_KEY"),
+        api_key=openai_api_key,
     )
     return openai_embeddings
 
 
-def get_llm():
-    llm = ChatOpenAI(api_key=os.environ.get("OPENAI_API_KEY"), model=LLM_MODEL)
+def get_llm(openai_api_key: str):
+    llm = ChatOpenAI(api_key=openai_api_key, model=LLM_MODEL)
     return llm

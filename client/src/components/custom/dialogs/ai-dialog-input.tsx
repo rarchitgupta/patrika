@@ -23,6 +23,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAppStore } from "@/store/appStore";
 import useAuthStore from "@/store/authStore";
 import { getRemoteChain } from "@/lib/langchain";
+import { toast } from "sonner";
 
 const formSchema = z.object({
   query: z.string({ required_error: "Query is required" }),
@@ -47,17 +48,17 @@ export function AiDialogInput() {
     if (values.query.length > 0) {
       setAiGenerateLoading(true);
       const user_id = await user?.getIdToken();
-      const remoteChain = getRemoteChain(user_id);
-      closeAiDialog();
-      const stream = await remoteChain.stream(values.query);
-      let accumulatedResponse = "";
-      for await (const chunk of stream) {
-        if (typeof chunk == "string") {
-          accumulatedResponse += chunk;
-        }
+
+      try {
+        const remoteChain = getRemoteChain(user_id);
+        closeAiDialog();
+        const response = await remoteChain.invoke(values.query);
+        editor?.commands.insertContent(String(response));
+        setAiGenerateLoading(false);
+      } catch (error) {
+        toast.error((error as Error).message);
+        setAiGenerateLoading(false);
       }
-      editor?.commands.insertContent(accumulatedResponse);
-      setAiGenerateLoading(false);
     }
   }
 

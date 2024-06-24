@@ -5,10 +5,45 @@ import { ProtectedRoute } from "@/components/custom/protected-route";
 import { DataTable } from "./data-table";
 import { columns, Document } from "./columns";
 import { useGetAllDocuments } from "@/api/get-all-documents";
-import { Button } from "@/components/ui/button";
+import { NewDocument } from "@/components/custom/new-document";
+import { useCreateDocument } from "@/api/create-document";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
-export default function Context() {
+export default function Documents() {
   const { data: documents } = useGetAllDocuments();
+  const { mutate: createDocumentMutate } = useCreateDocument();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  function addNewDocument() {
+    const createDocumentPromise = () => {
+      return new Promise((resolve, reject) =>
+        createDocumentMutate(
+          { name: "Untitled" },
+          {
+            onSuccess: (data) => {
+              queryClient.invalidateQueries({
+                queryKey: ["documents"],
+                exact: true,
+              });
+              router.push(`/${data.id}`);
+              resolve(data);
+            },
+            onError: (error) => {
+              toast.error(error.message);
+              reject(error);
+            },
+          }
+        )
+      );
+    };
+
+    toast.promise(createDocumentPromise(), {
+      loading: "Creating...",
+      error: "Document creation failed",
+    });
+  }
   return (
     <ProtectedRoute>
       <AppLayout>
@@ -19,7 +54,9 @@ export default function Context() {
               <DataTable
                 columns={columns}
                 data={documents}
-                children={<Button>Create</Button>}
+                children={
+                  <NewDocument createNewDocumentHandler={addNewDocument} />
+                }
               />
             )}
           </div>

@@ -7,9 +7,9 @@ export const useUploadSource = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ file }: { file: File }) => {
-      if (!user) {
-        throw new Error("User is not authenticated");
-      }
+      const openaiApiKey = window.localStorage.getItem("openaikey");
+      if (!openaiApiKey) throw new Error("OpenAI API key not found");
+      if (!user) throw new Error("User is not authenticated");
       const token = await user.getIdToken();
       const formData = new FormData();
       formData.append("file", file);
@@ -21,6 +21,7 @@ export const useUploadSource = () => {
           headers: {
             Authorization: `Bearer ${token}`,
             "Content-Type": "multipart/form-data",
+            "x-api-key": openaiApiKey,
           },
         }
       );

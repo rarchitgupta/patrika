@@ -28,14 +28,14 @@ export default function Login() {
       <div className="flex flex-col p-6 max-w-7xl w-full gap-6 rounded-md bg-card min-h-screen">
         <Header />
         <div className="flex flex-col items-center gap-2 justify-center flex-grow">
-          <h1 className="text-3xl font-bold">Login</h1>
+          <h1 className="text-3xl font-medium">Login</h1>
           <p className="text-balance text-muted-foreground">
             Get started below
           </p>
-          <div className="grid gap-4 w-[400px]">
+          <div className="grid gap-4 w-full md:w-[400px] mt-10">
             <Button
               variant="outline"
-              className="w-full gap-2"
+              className="md:w-full gap-2"
               onClick={handleGoogleLogin}
             >
               <FaGoogle />

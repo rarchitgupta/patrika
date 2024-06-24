@@ -1,4 +1,5 @@
 from typing import Optional, List
+from app.sources.vectorstore import get_vectorstore
 from langchain_core.runnables import (
     RunnablePassthrough,
     RunnableSerializable,
@@ -17,7 +18,8 @@ class PerUserQuery(RunnableSerializable):
     """
 
     user_id: Optional[str]
-    vectorstore: VectorStore
+    openai_api_key: Optional[str]
+    vectorstore: Optional[VectorStore]
 
     class Config:
         # Allow arbitrary types since VectorStore is an abstract interface
@@ -25,8 +27,9 @@ class PerUserQuery(RunnableSerializable):
         arbitrary_types_allowed = True
 
     def get_rag_chain(self, query):
+        self.vectorstore = get_vectorstore(self.openai_api_key)
         retriever = self.vectorstore.similarity_search(
-            query, k=10, filter={"user_id": {"$eq": self.user_id}}
+            query, k=5, filter={"user_id": {"$eq": self.user_id}}
         )
 
         def format_docs(docs):

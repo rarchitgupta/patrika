@@ -29,6 +29,10 @@ fastapi-nextauth-jwt = "^2.0.0"
 firebase-admin = "^6.5.0"
 ruff = "^0.4.8"
 python-poppler = "^0.4.1"
+uuid6 = "^2024.1.12"
+aiofiles = "^23.2.1"
+cryptography = "^42.0.8"
+psycopg2 = "^2.9.9"
 
 
 [tool.poetry.group.dev.dependencies]

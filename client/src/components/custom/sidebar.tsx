@@ -5,10 +5,9 @@ import {
   Files,
   MessageSquareMore,
   Brain,
-  Pencil,
+  NotebookPen,
+  Settings,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { usePathname } from "next/navigation";
 
@@ -33,25 +32,32 @@ export function Sidebar() {
         </div>
         <div className="flex-1">
           <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
-            <Link href="/" className={getLinkClass("/")}>
-              <Pencil className="h-4 w-4" />
-              Create
-            </Link>
-            <Link href="/documents" className={getLinkClass("/documents")}>
-              <Files className="h-4 w-4" />
-              Documents
-            </Link>
-            <Link href="/context" className={getLinkClass("/context")}>
-              <Brain className="h-4 w-4" />
-              Context
-            </Link>
-            <Link href="/chat" className={getLinkClass("/chat")}>
-              <MessageSquareMore className="h-4 w-4" />
-              Chat
-            </Link>
+            <div>
+              <Link href="/" className={getLinkClass("/")}>
+                <NotebookPen className="h-4 w-4" />
+                Create
+              </Link>
+              <Link href="/documents" className={getLinkClass("/documents")}>
+                <Files className="h-4 w-4" />
+                Documents
+              </Link>
+              <Link href="/context" className={getLinkClass("/context")}>
+                <Brain className="h-4 w-4" />
+                Context
+              </Link>
+              <Link href="/chat" className={getLinkClass("/chat")}>
+                <MessageSquareMore className="h-4 w-4" />
+                Chat
+              </Link>
+            </div>
           </nav>
         </div>
-        <div className="mt-auto p-4"></div>
+        <div className="mt-auto px-2 py-4 text-sm font-medium lg:px-4 lg:py-8">
+          <Link href="/settings" className={getLinkClass("/settings")}>
+            <Settings className="h-4 w-4" />
+            Settings
+          </Link>
+        </div>
       </div>
     </div>
   );

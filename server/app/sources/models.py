@@ -1,5 +1,6 @@
 from sqlalchemy import Column, String, Integer
-from ..database import Base
+from sqlalchemy.types import ARRAY
+from app.database import Base
 
 
 class Source(Base):
@@ -9,3 +10,4 @@ class Source(Base):
     source_name = Column(String, index=True)
     meta_source_name = Column(String, index=True)
     source_type = Column(String)
+    associated_vector_ids = Column(ARRAY(String))

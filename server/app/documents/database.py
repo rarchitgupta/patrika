@@ -13,6 +13,7 @@ def add_document_db(name: str, user_id: str, json_content: dict, date, db: Sessi
     )
     db.add(document)
     db.commit()
+    return db.query(Document).filter(Document.id == document.id).first()
 
 
 def update_document_db(
@@ -68,3 +69,8 @@ def get_document_by_id(id: int, user_id: str, db: Session):
         .first()
     )
     return document
+
+
+def delete_document_db(id: int, user_id: str, db: Session):
+    db.query(Document).filter(Document.id == id, Document.user_id == user_id).delete()
+    db.commit()

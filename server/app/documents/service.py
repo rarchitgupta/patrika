@@ -7,6 +7,7 @@ from .database import (
     update_document_db,
     get_latest_document,
     get_document_by_id,
+    delete_document_db,
 )
 
 
@@ -14,8 +15,12 @@ async def add_document_service(
     name: str, user_id: str, json_content: dict, date, db: Session
 ):
     try:
-        add_document_db(name, user_id, json_content, date, db)
-        return {"success": True, "message": "Document added successfully"}
+        document = add_document_db(name, user_id, json_content, date, db)
+        return {
+            "success": True,
+            "message": "Document added successfully",
+            "id": document.id,
+        }
     except Exception as e:
         logger.error(e)
         return {"success": False, "message": str(e)}
@@ -57,6 +62,15 @@ async def get_document_service(id: int, user_id: str, db: Session):
     try:
         document = get_document_by_id(id, user_id, db)
         return {"success": True, "data": document}
+    except Exception as e:
+        logger.error(e)
+        return {"success": False, "message": str(e)}
+
+
+async def delete_document_service(id: int, user_id: str, db: Session):
+    try:
+        delete_document_db(id, user_id, db)
+        return {"success": True, "message": "Document deleted successfully"}
     except Exception as e:
         logger.error(e)
         return {"success": False, "message": str(e)}
