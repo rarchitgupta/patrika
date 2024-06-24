@@ -7,7 +7,10 @@ export const useUploadSource = () => {
 
   const mutation = useMutation({
     mutationFn: async ({ file }: { file: File }) => {
-      const openaiApiKey = window.localStorage.getItem("openaikey");
+      let openaiApiKey: string | null = null;
+      if (typeof window !== "undefined") {
+        openaiApiKey = window.localStorage.getItem("openaikey");
+      }
       if (!openaiApiKey) throw new Error("OpenAI API key not found");
       if (!user) throw new Error("User is not authenticated");
       const token = await user.getIdToken();

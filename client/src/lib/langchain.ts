@@ -6,7 +6,10 @@ export const getRemoteChain: (
 ) => RemoteRunnable<unknown, unknown, RunnableConfig> = (
   user_id: string | undefined
 ) => {
-  const openaiApiKey = window.localStorage.getItem("openaikey");
+  let openaiApiKey: string | null = null;
+  if (typeof window !== "undefined") {
+    openaiApiKey = window.localStorage.getItem("openaikey");
+  }
   if (!openaiApiKey) throw new Error("OpenAI API key not found");
   return new RemoteRunnable({
     url: `${process.env.NEXT_PUBLIC_API_URL}`,

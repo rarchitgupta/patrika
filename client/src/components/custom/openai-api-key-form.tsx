@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   apiKey: z.string(),
@@ -22,15 +23,24 @@ export function OpenAIKeyForm() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      apiKey: window.localStorage.getItem("openaikey") || "",
+      apiKey: "",
     },
   });
   async function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.apiKey.length > 0) {
-      window.localStorage.setItem("openaikey", values.apiKey);
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem("openaikey", values.apiKey);
+      }
       toast.success("API key saved");
     }
   }
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const apiKey = window.localStorage.getItem("openaikey");
+      if (apiKey) form.setValue("apiKey", apiKey);
+    }
+  }, []);
   return (
     <div>
       <Form {...form}>

@@ -5,7 +5,6 @@ import { AiDialogInput } from "@/components/custom/dialogs/ai-dialog-input";
 import { ClientEditor } from "@/components/custom/client-editor";
 import { DatePicker } from "@/components/custom/date-picker";
 import { EditorStatus } from "@/components/custom/editor-status";
-import { OpenAIKeyInput } from "@/components/custom/dialogs/openai-api-key";
 import { ProtectedRoute } from "@/components/custom/protected-route";
 import { AppLayout } from "@/components/custom/app-layout";
 import { EditableTitle } from "@/components/custom/editable-title";
@@ -81,7 +80,6 @@ export default function Document({
                 handleContentUpdate={handleContentUpdate}
               />
               <AiDialogInput />
-              <OpenAIKeyInput />
             </div>
           </div>
         </ScrollArea>
