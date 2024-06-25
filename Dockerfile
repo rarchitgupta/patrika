@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.11-slim
 
 RUN apt update && apt install -y libpq-dev
 
@@ -6,9 +6,11 @@ RUN pip install poetry==1.6.1
 
 RUN poetry config virtualenvs.create false
 
-WORKDIR /code
+WORKDIR /api
 
 COPY ./pyproject.toml ./poetry.lock* ./
+
+COPY ./Poetry_README.md ./README.md
 
 COPY ./package[s] ./packages
 
