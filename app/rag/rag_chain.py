@@ -1,4 +1,6 @@
 from typing import Optional, List
+
+from langchain_openai import ChatOpenAI
 from app.sources.vectorstore import get_vectorstore
 from langchain_core.runnables import (
     RunnablePassthrough,
@@ -18,7 +20,7 @@ class PerUserQuery(RunnableSerializable):
     """
 
     user_id: Optional[str]
-    openai_api_key: Optional[str]
+    embeddings_api_key: Optional[str]
     vectorstore: Optional[VectorStore]
 
     class Config:
@@ -27,7 +29,7 @@ class PerUserQuery(RunnableSerializable):
         arbitrary_types_allowed = True
 
     def get_rag_chain(self, query):
-        self.vectorstore = get_vectorstore(self.openai_api_key)
+        self.vectorstore = get_vectorstore(self.embeddings_api_key)
         retriever = self.vectorstore.similarity_search(
             query, k=5, filter={"user_id": {"$eq": self.user_id}}
         )
@@ -45,3 +47,17 @@ class PerUserQuery(RunnableSerializable):
     ) -> List[Document]:
         retriever = self.get_rag_chain(query=input)
         return retriever
+
+class OpenAIChatLLM(RunnableSerializable):
+
+    openai_api_key: Optional[str]
+    
+    class Config:
+        
+        arbitrary_types_allowed = True
+        
+    def invoke(
+        self, input: str, config: Optional[RunnableConfig] = None, **kwargs
+    ) -> List[Document]:
+        llm = ChatOpenAI(openai_api_key=self.openai_api_key, model="gpt-3.5-turbo")
+        return llm

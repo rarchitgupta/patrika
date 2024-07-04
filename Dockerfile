@@ -1,6 +1,7 @@
-FROM python:3.11-slim
+FROM python:3.11-slim-buster
 
-RUN apt update && apt install -y libpq-dev
+RUN apt-get update && \
+    apt-get install -y libpq-dev gcc ffmpeg libsm6 libxext6
 
 RUN pip install poetry==1.6.1
 

@@ -21,10 +21,9 @@ def delete_from_vectorstore(associated_vector_ids: List[str], openai_api_key: st
 
 
 def get_vectorstore(openai_api_key: str):
-    embeddings = get_embeddings(openai_api_key)
     vectorstore = PGVector(
         collection_name=PG_COLLECTION_NAME,
         connection=PG_CONNECTION_STRING,
-        embeddings=embeddings,
+        embeddings=get_embeddings(openai_api_key),
     )
     return vectorstore
