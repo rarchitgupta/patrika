@@ -7,7 +7,7 @@ from ..utils.log_config import logger
 
 
 json_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)), "../firebase.json"
+    os.path.dirname(os.path.abspath(__file__)), "./firebase.json"
 )
 
 security = HTTPBearer()

@@ -6,7 +6,7 @@ from fastapi import UploadFile
 from langchain.schema import Document
 from langchain_community.document_loaders import UnstructuredPDFLoader
 from langchain_experimental.text_splitter import SemanticChunker
-from langchain_openai import OpenAIEmbeddings
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from app.utils.log_config import logger
 
 
@@ -29,7 +29,7 @@ async def load_doc(file: UploadFile, user_id: str) -> List[Document]:
         return None
 
 
-def split_text(docs: List[Document], embeddings: OpenAIEmbeddings):
+def split_text(docs: List[Document], embeddings: GoogleGenerativeAIEmbeddings):
     vector_ids = []
     text_splitter = SemanticChunker(embeddings=embeddings)
     chunks = text_splitter.split_documents(docs)

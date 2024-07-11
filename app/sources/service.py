@@ -8,13 +8,13 @@ from .vectorstore import add_to_vectorstore, delete_from_vectorstore
 
 
 async def load_split_store_source(
-    file: UploadFile, user_id: str, db: Session, openai_api_key: str
+    file: UploadFile, user_id: str, db: Session
 ):
     try:
         docs, tmp_file_name = await load_doc(file, user_id)
-        embeddings = get_embeddings(openai_api_key)
+        embeddings = get_embeddings()
         chunks, vector_ids = split_text(docs, embeddings)
-        add_to_vectorstore(chunks, openai_api_key)
+        add_to_vectorstore(chunks)
         if docs:
             add_source_db(file.filename, tmp_file_name, user_id, vector_ids, db)
         return {"success": True, "message": "File loaded successfully"}
@@ -23,10 +23,10 @@ async def load_split_store_source(
         return {"success": False, "message": str(e)}
 
 
-async def delete_source(id: int, user_id: str, db: Session, openai_api_key: str):
+async def delete_source(id: int, user_id: str, db: Session):
     try:
         associated_vector_ids = get_vector_ids(user_id, id, db)
-        delete_from_vectorstore(associated_vector_ids, openai_api_key)
+        delete_from_vectorstore(associated_vector_ids)
         delete_db_source(id, db)
         return {"success": True, "message": "Source deleted successfully"}
     except Exception as e:
