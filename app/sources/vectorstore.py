@@ -5,9 +5,9 @@ from app.config import PG_COLLECTION_NAME, PG_CONNECTION_STRING
 from app.llm.utils import get_embeddings
 
 
-def add_to_vectorstore(chunks: List[Document], openai_api_key: str):
-    embeddings = get_embeddings(openai_api_key)
-    vectorstore = get_vectorstore(openai_api_key)
+def add_to_vectorstore(chunks: List[Document]):
+    embeddings = get_embeddings()
+    vectorstore = get_vectorstore()
     vectorstore.add_documents(
         documents=chunks,
         embedding=embeddings,
@@ -15,15 +15,15 @@ def add_to_vectorstore(chunks: List[Document], openai_api_key: str):
     )
 
 
-def delete_from_vectorstore(associated_vector_ids: List[str], openai_api_key: str):
-    vectorstore = get_vectorstore(openai_api_key)
+def delete_from_vectorstore(associated_vector_ids: List[str]):
+    vectorstore = get_vectorstore()
     vectorstore.delete(associated_vector_ids)
 
 
-def get_vectorstore(openai_api_key: str):
+def get_vectorstore():
     vectorstore = PGVector(
         collection_name=PG_COLLECTION_NAME,
         connection=PG_CONNECTION_STRING,
-        embeddings=get_embeddings(openai_api_key),
+        embeddings=get_embeddings(),
     )
     return vectorstore

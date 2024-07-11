@@ -53,10 +53,10 @@ export function Sidebar() {
           </nav>
         </div>
         <div className="mt-auto px-2 py-4 text-sm font-medium lg:px-4 lg:py-8">
-          <Link href="/settings" className={getLinkClass("/settings")}>
+          {/* <Link href="/settings" className={getLinkClass("/settings")}>
             <Settings className="h-4 w-4" />
             Settings
-          </Link>
+          </Link> */}
         </div>
       </div>
     </div>
