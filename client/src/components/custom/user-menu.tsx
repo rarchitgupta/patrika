@@ -24,8 +24,8 @@ export function UserMenu() {
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
         <DropdownMenuLabel>Account and Settings</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem><Link href={"/settings"}>Settings</Link></DropdownMenuItem>
+        {/* <DropdownMenuSeparator />
+        <DropdownMenuItem><Link href={"/settings"}>Settings</Link></DropdownMenuItem> */}
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={logout}>Logout</DropdownMenuItem>
       </DropdownMenuContent>

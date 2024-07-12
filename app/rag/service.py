@@ -38,6 +38,6 @@ per_user_retriever = PerUserQuery(
 
 llm = get_llm()
 
-prompt = hub.pull("rlm/rag-prompt")
+prompt = hub.pull("rarchit/rag-prompt")
 
 chain = per_user_retriever | prompt | llm | StrOutputParser()
