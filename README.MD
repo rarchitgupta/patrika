@@ -31,12 +31,6 @@ Work in Progress: Coming soon
 
 ### Server
 
-Move to the server folder from the project root directory:
-
-```bash
-cd server
-```
-
 Make sure you have [poetry](https://python-poetry.org/) installed on your system
 Then install project dependencies with:
 
